@@ -1,0 +1,112 @@
+# Maton apps and route prefixes
+
+## Verified route families
+
+These are grounded in the existing repo wrappers plus prior live verification against Maton-backed data.
+
+### Gmail
+
+App prefix:
+
+```text
+google-mail
+```
+
+Verified route pattern:
+
+```text
+/google-mail/gmail/v1/...
+```
+
+Known-good GET examples:
+
+```bash
+python scripts/maton_api_gateway.py get \
+  --app google-mail \
+  --path /gmail/v1/users/me/profile
+
+python scripts/maton_api_gateway.py get \
+  --app google-mail \
+  --path /gmail/v1/users/me/messages \
+  --query maxResults=10 \
+  --query q='is:unread in:inbox'
+```
+
+### Google Calendar
+
+App prefix:
+
+```text
+google-calendar
+```
+
+Verified route pattern:
+
+```text
+/google-calendar/calendar/v3/...
+```
+
+Known-good GET examples:
+
+```bash
+python scripts/maton_api_gateway.py get \
+  --app google-calendar \
+  --path /calendar/v3/users/me/calendarList
+
+python scripts/maton_api_gateway.py get \
+  --app google-calendar \
+  --path /calendar/v3/calendars/primary/events \
+  --query maxResults=5 \
+  --query singleEvents=true \
+  --query orderBy=startTime \
+  --query timeMin=2026-06-05T00:00:00Z \
+  --query timeMax=2026-06-06T00:00:00Z
+```
+
+## Connection targeting
+
+If Maton has multiple connected accounts for the same app, pass an explicit connection:
+
+```bash
+python scripts/maton_api_gateway.py get \
+  --connection <connection-id> \
+  --app google-mail \
+  --path /gmail/v1/users/me/profile
+```
+
+This sets:
+
+```text
+Maton-Connection: <connection-id>
+```
+
+## Mutation shape example
+
+This shape is useful for exploring a route when you already know the Maton-backed API contract, but the example below is not yet repo-verified end to end:
+
+```bash
+python scripts/maton_api_gateway.py post \
+  --connection <connection-id> \
+  --app google-calendar \
+  --path /calendar/v3/calendars/primary/events \
+  --body @event.json
+```
+
+Use mutation commands only after you have:
+
+1. verified the exact route and payload shape against provider docs or an existing working client
+2. confirmed the target account with `maton-connections`
+3. accepted that Maton will forward the write to the live upstream service
+
+## Candidate Maton-backed apps seen in prior research but not yet repo-verified
+
+Treat these as leads, not promises:
+
+- Slack
+- Notion
+- HubSpot
+- Outlook
+- Google Drive
+- Search Console
+
+Do not claim Hermes support for these until you verify route prefixes and successful requests.
