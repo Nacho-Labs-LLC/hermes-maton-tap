@@ -154,7 +154,8 @@ Documented route pattern:
 
 Grounding note:
 - this route family is documented in Maton's public `api-gateway-skill` reference and wrapped by this repo's `maton-google-docs` skill
-- unlike Gmail/Calendar/Meet above, this repo has not yet live-validated Docs requests against a real account
+- live-validated in this repo: `GET /google-docs/v1/documents/{documentId}` against real Maton Docs connections
+- not yet live-validated in this repo: write-oriented Docs mutations such as create or batch update
 
 Known request shapes:
 

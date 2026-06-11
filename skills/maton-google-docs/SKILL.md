@@ -20,7 +20,8 @@ Grounding level:
 - `google-docs` is already listed as a valid Maton connection app in this repo's `maton-connections` skill.
 - The route family and request shapes documented here are grounded in Maton's public `api-gateway-skill` reference for Google Docs: `/google-docs/v1/documents/...`.
 - Local request construction is covered by repo tests.
-- This repo change did **not** include live authenticated validation against a real Google Docs connection, so keep operational claims narrower than Gmail/Calendar.
+- This tap includes live authenticated validation for the read path `GET /documents/{documentId}` against real Google Docs connections.
+- Write-oriented Docs helpers remain locally request-validated in this repo, not yet live write-validated.
 
 Base pattern:
 
@@ -132,8 +133,8 @@ python scripts/maton_google_docs.py batch-update <document-id> \
 1. **Wrong account due to omitted connection header**
    If multiple Google accounts are connected, use `--connection`.
 
-2. **Claiming live write verification that did not happen**
-   This skill's local tests confirm request construction, not real upstream success.
+2. **Overstating live validation scope**
+   Only `get` is live-validated in this tap right now. The write-oriented wrappers are still request-construction validated locally, not proven live upstream here.
 
 3. **Sending malformed batchUpdate payloads**
    `batch-update` requires a non-empty `requests` array.
@@ -143,7 +144,7 @@ python scripts/maton_google_docs.py batch-update <document-id> \
 
 ## Verification Checklist
 
-- [ ] `python scripts/maton_google_docs.py get <document-id>` returns HTTP 200 against a real connection
+- [x] `python scripts/maton_google_docs.py get <document-id>` returns HTTP 200 against a real connection
 - [ ] target connection is confirmed before operational writes
 - [x] local tests cover `get`, `create-document`, `batch-update`, `insert-text`, and `replace-text` request construction
 - [x] repo lint/test/compile checks pass after adding the skill

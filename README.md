@@ -60,13 +60,13 @@ Live verification status captured in this repo:
 - Confirmed route families for the generic gateway helper: `google-mail` + `/gmail/v1/...`, `google-calendar` + `/calendar/v3/...`, and `google-meet` + `/v2/...`
 - Confirmed real mutation flows against a temporary validation event on a live calendar: generic gateway `POST`, generic gateway `PATCH`, generic gateway `DELETE`, plus calendar `create-event`, `update-event`, `reschedule-event`, `update-attendees --clear-attendees`, and `--add-meet`
 - Confirmed Google Meet live capability surface for this tap: `GET /v2/conferenceRecords`, `GET /v2/conferenceRecords/{id}`, `GET /v2/conferenceRecords/{id}/participants`, `POST /v2/spaces`, and `GET /v2/spaces/{space}`
-- Google Docs wrapper scope is grounded in Maton's documented `/google-docs/v1/documents/...` route family plus local request-shape tests, but is not yet repo-live-validated against a real Maton Docs connection
+- Confirmed Google Docs live read capability for this tap: `GET /google-docs/v1/documents/{documentId}` against real Maton Docs connections; write-oriented Docs helpers remain request-shape-tested but not yet live write-validated
 - Calendar default UX tightened: `upcoming` / `list-events` now default `timeMin` to the current UTC time so the common path surfaces near-future events instead of ancient recurring instances
 - Confirmed Google Drive live capability surface for this tap's metadata-first wrapper: `GET /drive/v3/about`, `GET /drive/v3/files`, and `GET /drive/v3/files/{fileId}` via the `google-drive` app prefix
 
 Known limits:
 - Verified live coverage is currently grounded in Gmail, Google Calendar, Google Drive metadata/search flows, and the narrow Google Meet conference-records/spaces surface
-- Google Docs is currently documented/request-test-validated in-repo but not yet live-authenticated in this tap
+- Google Docs is currently live-validated for the `get` read path; write-oriented helpers remain documented/request-test-validated in-repo but not yet live write-validated in this tap
 - Google Drive is intentionally metadata-first here; download/upload/write semantics are not claimed by this wrapper
 - Do not claim live Google Meet join/transcription/browser-control capability from this repo; Meet here is the API/control-data plane only
 - Attendee notification behavior to third parties was **not** exhaustively live-tested; keep public framing honest about that
