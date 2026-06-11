@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [maton, google-docs, docs, google-workspace, brokered-auth]
-    related_skills: [maton-connections, maton-api-gateway, maton-google-calendar]
+    related_skills: [maton-connections, maton-google-calendar]
 ---
 
 # Maton Google Docs
@@ -126,7 +126,7 @@ python scripts/maton_google_docs.py batch-update <document-id> \
 2. Start with `get` to confirm the document is reachable through Maton.
 3. Prefer focused wrappers like `insert-text` or `replace-text` for common edits.
 4. Use raw `batch-update` only when you already know the exact Google Docs request shape you need.
-5. If you need a route not wrapped here, fall back to `maton-api-gateway` rather than guessing hidden behavior.
+5. If you need a route not wrapped here, fall back to Maton's official `api-gateway` skill rather than guessing hidden behavior.
 
 ## Common Pitfalls
 

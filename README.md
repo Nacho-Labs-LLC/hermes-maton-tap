@@ -16,7 +16,6 @@ Install only the skill(s) you need:
 
 ```bash
 hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-connections
-hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-api-gateway
 hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-gmail
 hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-calendar
 hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-docs
@@ -29,7 +28,6 @@ hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-meet
 | Skill | Install path | Purpose |
 | --- | --- | --- |
 | `maton-connections` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-connections` | Inspect and manage Maton connections for brokered OAuth accounts. |
-| `maton-api-gateway` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-api-gateway` | Send generic GET/POST/PATCH/DELETE requests through verified Maton gateway route families. |
 | `maton-gmail` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-gmail` | Read Gmail through Maton's managed gateway. |
 | `maton-google-calendar` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-calendar` | List calendars, inspect upcoming events, and perform common event CRUD/invite flows. |
 | `maton-google-docs` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-docs` | Inspect and update Google Docs through a thin Maton wrapper with documented route grounding, request-shape tests, and intentionally narrower live-claim language. |
@@ -38,12 +36,27 @@ hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-meet
 
 Each skill ships its own `SKILL.md` with usage guidance, requirements, examples, and pitfalls.
 
+## Official gateway dependency
+
+This tap no longer ships its own generic Maton gateway skill.
+For broad exploratory or cross-app gateway work, install Maton's official `api-gateway` skill directly:
+
+```bash
+npx skills add https://github.com/maton-ai/api-gateway-skill --skill api-gateway
+```
+
+This repo is intentionally the narrower layer on top:
+- Google-focused Hermes wrappers
+- live-validated task flows
+- opinionated usage docs for the specific paths we actually use
+
 ## What this is
 
 A clean Hermes-friendly packaging of the Maton workflow Nate was already using in OpenClaw:
 - control-plane connection management via `https://ctrl.maton.ai`
 - app gateway requests via `https://gateway.maton.ai`
 - explicit multi-account support via the `Maton-Connection` header
+- thin Google task wrappers that assume the official Maton `api-gateway` skill exists for generic fallback work
 
 ## What this is not
 
@@ -63,6 +76,9 @@ hermes skills tap add Nacho-Labs-LLC/hermes-maton-tap
 hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-connections
 hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-gmail
 hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-calendar
+
+# Install the official generic fallback separately
+npx skills add https://github.com/maton-ai/api-gateway-skill --skill api-gateway
 
 # Make sure Hermes can see your Maton auth
 export MATON_API_KEY=...
@@ -87,8 +103,8 @@ Current state: **beta but practically usable**.
 
 Live verification status captured in this repo:
 - Confirmed against real Maton-backed data: connection listing, Gmail profile/list/get, Google Calendar calendar listing, and current event listing with explicit time bounds
-- Confirmed route families for the generic gateway helper: `google-mail` + `/gmail/v1/...`, `google-calendar` + `/calendar/v3/...`, and `google-meet` + `/v2/...`
-- Confirmed real mutation flows against a temporary validation event on a live calendar: generic gateway `POST`, generic gateway `PATCH`, generic gateway `DELETE`, plus calendar `create-event`, `update-event`, `reschedule-event`, `update-attendees --clear-attendees`, and `--add-meet`
+- Confirmed Maton route families used by these wrappers: `google-mail` + `/gmail/v1/...`, `google-calendar` + `/calendar/v3/...`, and `google-meet` + `/v2/...`
+- Confirmed real mutation flows against a temporary validation event on a live calendar: direct Maton gateway `POST`, `PATCH`, and `DELETE`, plus calendar `create-event`, `update-event`, `reschedule-event`, `update-attendees --clear-attendees`, and `--add-meet`
 - Confirmed Google Meet live capability surface for this tap: `GET /v2/conferenceRecords`, `GET /v2/conferenceRecords/{id}`, `GET /v2/conferenceRecords/{id}/participants`, `POST /v2/spaces`, and `GET /v2/spaces/{space}`
 - Confirmed Google Docs live read capability for this tap: `GET /google-docs/v1/documents/{documentId}` against real Maton Docs connections; write-oriented Docs helpers remain request-shape-tested but not yet live write-validated
 - Calendar default UX tightened: `upcoming` / `list-events` now default `timeMin` to the current UTC time so the common path surfaces near-future events instead of ancient recurring instances
@@ -173,3 +189,5 @@ Before calling the tap ready for review:
 ## Notes
 
 This repo was rebuilt from working OpenClaw-era Maton skill references and live verification against Maton endpoints, not copied blindly.
+
+The canonical generic gateway surface now lives in Maton's official `api-gateway` skill; this tap focuses on the higher-level wrappers.

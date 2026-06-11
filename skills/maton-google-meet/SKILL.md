@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [maton, google-meet, meet, conferencing, brokered-auth]
-    related_skills: [maton-connections, maton-api-gateway, maton-google-calendar]
+    related_skills: [maton-connections, maton-google-calendar]
 ---
 
 # Maton Google Meet
@@ -130,7 +130,7 @@ The helper sends `{}` when you omit `--payload`, which keeps the common path sim
 2. Start with `list-records` or `get-space` to confirm account targeting.
 3. Use `participants` only after confirming the target conference record ID.
 4. Use `create-space` for the verified space-creation flow.
-5. If you need anything beyond the verified records/spaces surface, drop to `maton-api-gateway` only after verifying the route shape independently.
+5. If you need anything beyond the verified records/spaces surface, drop to Maton's official `api-gateway` skill only after verifying the route shape independently.
 
 ## Common Pitfalls
 

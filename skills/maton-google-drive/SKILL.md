@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [maton, google-drive, drive, files, brokered-auth]
-    related_skills: [maton-connections, maton-api-gateway]
+    related_skills: [maton-connections]
 ---
 
 # Maton Google Drive
@@ -171,7 +171,7 @@ For anything not exposed as a first-class flag, repeat `--query key=value`.
 2. Start with `about` to confirm the account responds.
 3. Use `list-files` with a narrow `--search` or `--folder-id`.
 4. Use `get-file` only for the specific file you care about.
-5. If you need a niche Drive parameter not surfaced here, try `--query key=value` or fall back to `maton-api-gateway` for exploratory work.
+5. If you need a niche Drive parameter not surfaced here, try `--query key=value` or fall back to Maton's official `api-gateway` skill for exploratory work.
 
 ## Common Pitfalls
 
