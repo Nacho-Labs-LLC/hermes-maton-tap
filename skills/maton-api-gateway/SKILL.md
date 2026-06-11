@@ -7,7 +7,7 @@ license: MIT
 metadata:
   hermes:
     tags: [maton, gateway, api, brokered-auth, http]
-    related_skills: [maton-connections, maton-gmail, maton-google-calendar]
+    related_skills: [maton-connections, maton-gmail, maton-google-calendar, maton-google-meet]
 ---
 
 # Maton API Gateway
@@ -151,6 +151,8 @@ Verified in this repo today:
 
 - `google-mail` + `/gmail/v1/...`
 - `google-calendar` + `/calendar/v3/...`
+- `google-drive` + `/drive/v3/...` for the metadata/search read surface
+- `google-meet` + `/v2/...`
 
 Detailed examples live in `references/apps-and-routes.md`.
 

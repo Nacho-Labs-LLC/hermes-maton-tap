@@ -8,11 +8,10 @@ version = "0.1.0"
 description = "Hermes skill tap for Maton-backed workflow helpers."
 readme = "README.md"
 requires-python = ">=3.11"
-license = { text = "MIT" }
+license = "MIT"
 authors = [{ name = "Nacho Labs" }]
 keywords = ["hermes", "skills", "maton"]
 classifiers = [
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.11",
@@ -20,10 +19,17 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
 ]
 
+[project.optional-dependencies]
+dev = ["build>=1.2.2", "pytest>=8", "ruff>=0.15"]
+
+[tool.setuptools]
+py-modules = ["maton_http"]
+
 [tool.pytest.ini_options]
 minversion = "8.0"
 testpaths = ["tests"]
 pythonpath = ["."]
+norecursedirs = [".git", ".venv", "build", "dist", "*.egg-info"]
 
 [tool.ruff]
 target-version = "py311"
