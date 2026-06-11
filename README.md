@@ -2,10 +2,12 @@
 
 Hermes skill tap for using [Maton](https://maton.ai) as a brokered auth gateway.
 
+It gives Hermes a practical, reusable surface for Maton-backed Google and related app workflows without rebuilding native OAuth flows inside Hermes.
+
 This repo is meant to be published as a GitHub skill tap so other Hermes users can add it with:
 
 ```bash
-hermes skills tap add OWNER/REPO
+hermes skills tap add Nacho-Labs-LLC/hermes-maton-tap
 ```
 
 ## Install skills from the tap
@@ -13,26 +15,26 @@ hermes skills tap add OWNER/REPO
 Install only the skill(s) you need:
 
 ```bash
-hermes skills install OWNER/REPO/skills/maton-connections
-hermes skills install OWNER/REPO/skills/maton-api-gateway
-hermes skills install OWNER/REPO/skills/maton-gmail
-hermes skills install OWNER/REPO/skills/maton-google-calendar
-hermes skills install OWNER/REPO/skills/maton-google-docs
-hermes skills install OWNER/REPO/skills/maton-google-drive
-hermes skills install OWNER/REPO/skills/maton-google-meet
+hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-connections
+hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-api-gateway
+hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-gmail
+hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-calendar
+hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-docs
+hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-drive
+hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-meet
 ```
 
 ## Included skills
 
 | Skill | Install path | Purpose |
 | --- | --- | --- |
-| `maton-connections` | `OWNER/REPO/skills/maton-connections` | Inspect and manage Maton connections for brokered OAuth accounts. |
-| `maton-api-gateway` | `OWNER/REPO/skills/maton-api-gateway` | Send generic GET/POST/PATCH/DELETE requests through verified Maton gateway route families. |
-| `maton-gmail` | `OWNER/REPO/skills/maton-gmail` | Read Gmail through Maton's managed gateway. |
-| `maton-google-calendar` | `OWNER/REPO/skills/maton-google-calendar` | List calendars, inspect upcoming events, and perform common event CRUD/invite flows. |
-| `maton-google-docs` | `OWNER/REPO/skills/maton-google-docs` | Inspect and update Google Docs through a thin Maton wrapper with documented route grounding, request-shape tests, and intentionally narrower live-claim language. |
-| `maton-google-drive` | `OWNER/REPO/skills/maton-google-drive` | Inspect Google Drive metadata/search flows through a live-validated, metadata-first wrapper. |
-| `maton-google-meet` | `OWNER/REPO/skills/maton-google-meet` | Inspect verified Google Meet conference records/participants and create/get Meet spaces. |
+| `maton-connections` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-connections` | Inspect and manage Maton connections for brokered OAuth accounts. |
+| `maton-api-gateway` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-api-gateway` | Send generic GET/POST/PATCH/DELETE requests through verified Maton gateway route families. |
+| `maton-gmail` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-gmail` | Read Gmail through Maton's managed gateway. |
+| `maton-google-calendar` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-calendar` | List calendars, inspect upcoming events, and perform common event CRUD/invite flows. |
+| `maton-google-docs` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-docs` | Inspect and update Google Docs through a thin Maton wrapper with documented route grounding, request-shape tests, and intentionally narrower live-claim language. |
+| `maton-google-drive` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-drive` | Inspect Google Drive metadata/search flows through a live-validated, metadata-first wrapper. |
+| `maton-google-meet` | `Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-meet` | Inspect verified Google Meet conference records/participants and create/get Meet spaces. |
 
 Each skill ships its own `SKILL.md` with usage guidance, requirements, examples, and pitfalls.
 
@@ -50,6 +52,34 @@ A clean Hermes-friendly packaging of the Maton workflow Nate was already using i
 - Not a full wrapper for every Maton-backed app yet
 
 It is a skill tap with helper scripts that make the existing Maton auth actually usable from Hermes sessions.
+
+## Quick start
+
+```bash
+# Add the tap
+hermes skills tap add Nacho-Labs-LLC/hermes-maton-tap
+
+# Install the minimum useful set
+hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-connections
+hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-gmail
+hermes skills install Nacho-Labs-LLC/hermes-maton-tap/skills/maton-google-calendar
+
+# Make sure Hermes can see your Maton auth
+export MATON_API_KEY=...
+```
+
+Recommended first use:
+1. load `maton-connections`
+2. confirm the target account/connection ID
+3. use a service-specific skill like Gmail, Calendar, Drive, Docs, or Meet
+
+## Best fit
+
+This tap is strongest when:
+- Maton already owns your app auth
+- you want Hermes to operate across multiple connected Google accounts
+- you want thin, inspectable wrappers instead of a heavy SDK or native OAuth rebuild
+
 
 ## Status
 
